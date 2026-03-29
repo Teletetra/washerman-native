@@ -14,15 +14,15 @@ import { theme } from '@/src/theme/colors.ts';
 
 
 const menuItems = [
-  { id: 1, title: "Your bookings", icon: "📅" },
-  { id: 2, title: "Address book", icon: "📖" },
-  { id: 3, title: "Refer & Earn", icon: "🔗", badge: "Earn upto ₹5000" },
-  { id: 4, title: "About us", icon: "ℹ️" },
-  { id: 5, title: "Terms & conditions", icon: "📄" },
-  { id: 6, title: "Privacy policy", icon: "🔒" },
-  { id: 7, title: "Help & support", icon: "🎧" },
-  { id: 8, title: "Request account deletion", icon: "🗑️" },
-  { id: 9, title: "Log out", icon: "🚪" },
+  { id: 1, title: "Your bookings", icon: "📅", route: "/(tabs)/bookings" },
+  { id: 2, title: "Address book", icon: "📖", route: "/address-book" },
+  { id: 3, title: "Refer & Earn", icon: "🔗", badge: "Earn upto ₹5000", route: "/refer-and-earn" },
+  { id: 4, title: "About us", icon: "ℹ️", route: "/about-us" },
+  { id: 5, title: "Terms & conditions", icon: "📄", route: "/terms" },
+  { id: 6, title: "Privacy policy", icon: "🔒", route: "/privacy" },
+  { id: 7, title: "Help & support", icon: "🎧", route: "/help" },
+  { id: 8, title: "Request account deletion", icon: "🗑️", action: "delete" }, // We'll handle this differently
+  { id: 9, title: "Log out", icon: "🚪", action: "logout" },
 ];
 
 export default function ProfileScreen() {
@@ -71,6 +71,16 @@ export default function ProfileScreen() {
                   index === menuItems.length - 1 && { borderBottomWidth: 0 },
                 ]}
                 activeOpacity={0.7}
+                onPress={() => {
+                  if (item.route) {
+                    router.push(item.route as any);
+                  } else if (item.action === 'delete') {
+                    // Show a confirmation alert instead of a whole new page
+                    alert("Are you sure you want to delete your account?");
+                  } else if (item.action === 'logout') {
+                    router.replace('/login');
+                  }
+                }}
               >
                 <View style={styles.menuItemLeft}>
                   <Text style={styles.menuIcon}>{item.icon}</Text>

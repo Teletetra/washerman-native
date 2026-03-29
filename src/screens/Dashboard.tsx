@@ -1,29 +1,38 @@
+import { useRouter } from "expo-router"; // <-- Added router import
 import React from "react";
 import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  ScrollView,
   Platform,
   SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
-import { useRouter } from "expo-router"; // <-- Added router import
 
 import { theme } from '@/src/theme/colors.ts';
 
 // ... (Keep your servicesData array here) ...
 const servicesData = [
-  { id: "1", title: "Bathroom\nCleaning", price: 25, oldPrice: 150, rating: "4.9", reviews: "14.4k", icon: "🚽" },
-  { id: "2", title: "Fridge\nCleaning", price: 149, oldPrice: 250, rating: "4.9", reviews: "3.1k", icon: "❄️" },
-  { id: "3", title: "Packing or\nUnpacking", price: 25, oldPrice: 125, rating: "5.0", reviews: "2.7k", icon: "📦" },
-  { id: "4", title: "Kitchen\nCleaning", price: 99, oldPrice: 199, rating: "4.9", reviews: "11.5k", icon: "🍽️" },
-  { id: "5", title: "Vegetable\nChopping", price: 49, oldPrice: 99, rating: "4.9", reviews: "3.5k", icon: "🔪" },
-  { id: "6", title: "Dusting &\nMopping", price: 79, oldPrice: 149, rating: "4.9", reviews: "5.6k", icon: "🧹" },
+  { id: "1", title: "Toilet\nCleaning", price: 15, oldPrice: 150, rating: "4.0", reviews: "4.2k", icon: "🚽" },
+  { id: "2", title: "Kitchen\nCleaning", price: 79, oldPrice: 199, rating: "4.5", reviews: "1.1k", icon: "🍽️" },
+  { id: "3", title: "Deep\nCleaning", price: 80, oldPrice: 800, rating: "5.0", reviews: "800", icon: "🧼" },
+  { id: "4", title: "Full Home\nCleaning", price: 150, oldPrice: 300, rating: "4.5", reviews: "3.0k", icon: "🏠" },
+  { id: "5", title: "Carpet\nCleaning", price: 12, oldPrice: 120, rating: "4.0", reviews: "1.2k", icon: "🛋️" },
+  { id: "6", title: "Sofa\nCleaning", price: 47, oldPrice: 156, rating: "4.6", reviews: "1.56k", icon: "🛋️" },
+  { id: "7", title: "Electronic\nItem Cleaning", price: 24, oldPrice: 160, rating: "4.1", reviews: "1.6k", icon: "💻" },
+  { id: "8", title: "Bathroom\nCleaning", price: 315, oldPrice: 700, rating: "4.0", reviews: "7.0k", icon: "🛁" },
+  { id: "9", title: "Floor\nScrubbing", price: 175, oldPrice: 500, rating: "4.7", reviews: "500", icon: "🧹" },
+  { id: "10", title: "Glass\nCleaning", price: 30, oldPrice: 85, rating: "4.3", reviews: "850", icon: "🪟" },
+  { id: "11", title: "Utensils\nCleaning", price: 30, oldPrice: 85, rating: "4.0", reviews: "850", icon: "🍴" },
+  { id: "12", title: "Dusting &\nWiping", price: 38, oldPrice: 110, rating: "4.2", reviews: "1.1k", icon: "🧹" },
+  { id: "13", title: "Swiping &\nMopping", price: 70, oldPrice: 140, rating: "4.5", reviews: "1.4k", icon: "🧹" },
+  { id: "14", title: "Cloth\nLaundry", price: 250, oldPrice: 500, rating: "4.8", reviews: "5.0k", icon: "🧺" },
+  { id: "15", title: "Cloth Dry\nCleaning", price: 250, oldPrice: 500, rating: "4.8", reviews: "5.0k", icon: "🧺" },
+  { id: "16", title: "Cloth\nIroning", price: 250, oldPrice: 500, rating: "4.8", reviews: "5.0k", icon: "🧺" },
 ];
-
 export default function DashboardScreen() {
-  const router = useRouter(); // <-- Initialize router
+  const router = useRouter();
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -37,7 +46,9 @@ export default function DashboardScreen() {
             </Text>
           </View>
           <View style={styles.headerRight}>
-            <TouchableOpacity style={styles.earnButton}>
+            <TouchableOpacity style={styles.earnButton}
+              onPress={() => router.push('/EarnRefer')}
+            >
               <Text style={styles.earnIcon}>🪙</Text>
               <View>
                 <Text style={styles.earnTextSmall}>Earn</Text>
@@ -55,8 +66,6 @@ export default function DashboardScreen() {
           </View>
         </View>
 
-        {/* ... (Keep the rest of your Dashboard heroSection & servicesSection code unchanged) ... */}
-        {/* Hero Section */}
         <View style={styles.heroSection}>
           <Text style={styles.heroTitleLight}>WE ARE</Text>
           <Text style={styles.heroTitleBold}>
@@ -76,8 +85,15 @@ export default function DashboardScreen() {
           <Text style={styles.sectionTitle}>Services we offer</Text>
           <View style={styles.gridContainer}>
             {servicesData.map((item) => (
-              <View key={item.id} style={styles.serviceCard}>
-                {/* Image Container */}
+              < TouchableOpacity
+                key={item.id}
+                style={styles.serviceCard}
+                activeOpacity={0.7}
+                onPress={() => router.push({
+                  pathname: '/service/[id]',
+                  params: { id: item.id, title: item.title.replace('\n', ' ') }
+                })}
+              >
                 <View style={styles.cardImageContainer}>
                   <View style={styles.ratingPill}>
                     <Text style={styles.starIcon}>⭐</Text>
@@ -95,12 +111,12 @@ export default function DashboardScreen() {
                     <Text style={styles.oldPrice}>₹{item.oldPrice}</Text>
                   </View>
                 </View>
-              </View>
+              </TouchableOpacity>
             ))}
           </View>
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </SafeAreaView >
   );
 }
 

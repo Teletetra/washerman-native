@@ -17,6 +17,14 @@ export default function RootLayout() {
         <Stack.Screen name="location2" options={{ headerShown: false }} />
         <Stack.Screen name="profile" options={{ headerShown: false }} />
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        <Stack.Screen name="service/[id]" options={{ headerShown: false }} />
+        <Stack.Screen name="profile-update" options={{ headerShown: false }} />
+        <Stack.Screen name="address-book" options={{ headerShown: false }} />
+        {/* <Stack.Screen name="refer-and-earn" options={{ headerShown: false }} /> */}
+        <Stack.Screen name="about-us" options={{ headerShown: false }} />
+        <Stack.Screen name="terms" options={{ headerShown: false }} />
+        <Stack.Screen name="privacy" options={{ headerShown: false }} />
+        <Stack.Screen name="help" options={{ headerShown: false }} />
       </Stack>
       <StatusBar style="auto" />
     </ThemeProvider>
