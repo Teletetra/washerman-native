@@ -1,33 +1,37 @@
-import { Tabs } from 'expo-router';
-import React from 'react';
 import { Ionicons } from '@expo/vector-icons';
+import { Tabs } from 'expo-router';
 
-import { Colors } from '@/constants/theme';
 import { useColorScheme } from '@/hooks/use-color-scheme';
+import { theme } from '@/src/theme/colors';
 
-export default function TabLayout() {
+export default function TabsLayout() {
   const colorScheme = useColorScheme();
 
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
         headerShown: false,
+        tabBarActiveTintColor: theme.primary,
+        tabBarStyle: {
+          borderTopWidth: 1,
+          borderTopColor: '#E5E5EA',
+        },
       }}>
       <Tabs.Screen
-        name="index"
+        name="dashboard"
         options={{
-          title: 'Home',
+          title: 'Dashboard',
           tabBarIcon: ({ color, size }) => <Ionicons name="home" size={size} color={color} />,
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name="bookings"
         options={{
-          title: 'Explore',
-          tabBarIcon: ({ color, size }) => <Ionicons name="compass" size={size} color={color} />,
+          title: 'Bookings',
+          tabBarIcon: ({ color, size }) => <Ionicons name="calendar" size={size} color={color} />,
         }}
       />
     </Tabs>
   );
 }
+

@@ -1,3 +1,54 @@
+// src/components/Header.tsx
+import React from 'react';
+import { View, Text, TouchableOpacity, StyleSheet, Platform } from 'react-native';
+import { useRouter } from 'expo-router';
+import { theme } from '../theme/colors';
+
+interface HeaderProps {
+    title: string;
+    showBack?: boolean;
+    backgroundColor?: string;
+    textColor?: string;
+}
+
+export default function Header({
+    title,
+    showBack = true,
+    backgroundColor = theme.surface,
+    textColor = theme.textDark
+}: HeaderProps) {
+    const router = useRouter();
+
+    return (
+        <View style={[styles.header, { backgroundColor }]}>
+            {showBack && (
+                <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
+                    <Text style={[styles.backIcon, { color: textColor }]}>←</Text>
+                </TouchableOpacity>
+            )}
+            <Text style={[styles.headerTitle, { color: textColor }]}>{title}</Text>
+        </View>
+    );
+}
+
+const styles = StyleSheet.create({
+    header: {
+        flexDirection: "row",
+        alignItems: "center",
+        paddingHorizontal: 20,
+        paddingTop: Platform.OS === "android" ? 20 : 10,
+        paddingBottom: 20,
+        borderBottomWidth: 1,
+        borderBottomColor: theme.border,
+    },
+    backButton: { marginRight: 15, padding: 5 },
+    backIcon: { fontSize: 24, fontWeight: "600" },
+    headerTitle: { fontSize: 20, fontWeight: "700" },
+});
+
+
+
+
 // Washerman/
 // ├── assets/                 # Default Expo assets (splash, icon) - replace with your blue ones
 // ├── src/
