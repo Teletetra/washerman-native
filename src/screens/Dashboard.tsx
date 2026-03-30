@@ -1,5 +1,5 @@
-import { useRouter } from "expo-router"; // <-- Added router import
-import React from "react";
+import { useRouter } from "expo-router";
+import React, { useEffect, useState } from "react";
 import {
   Platform,
   SafeAreaView,
@@ -9,10 +9,10 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import AsyncStorage from '@react-native-async-storage/async-storage'; // <-- Added Import
 
-import { theme } from '@/src/theme/colors.ts';
+import { theme } from '@/src/theme/colors';
 
-// ... (Keep your servicesData array here) ...
 const servicesData = [
   { id: "1", title: "Toilet\nCleaning", price: 15, oldPrice: 150, rating: "4.0", reviews: "4.2k", icon: "🚽" },
   { id: "2", title: "Kitchen\nCleaning", price: 79, oldPrice: 199, rating: "4.5", reviews: "1.1k", icon: "🍽️" },
@@ -31,20 +31,57 @@ const servicesData = [
   { id: "15", title: "Cloth Dry\nCleaning", price: 250, oldPrice: 500, rating: "4.8", reviews: "5.0k", icon: "🧺" },
   { id: "16", title: "Cloth\nIroning", price: 250, oldPrice: 500, rating: "4.8", reviews: "5.0k", icon: "🧺" },
 ];
+
 export default function DashboardScreen() {
   const router = useRouter();
+
+  // --- Location States ---
+  const [locTitle, setLocTitle] = useState("Fetching...");
+  const [locSubtitle, setLocSubtitle] = useState("Please wait...");
+
+  // --- Fetch Location on Load ---
+  useEffect(() => {
+    const fetchLocation = async () => {
+      try {
+        const savedLocation = await AsyncStorage.getItem('user_location');
+        if (savedLocation) {
+          // If savedLocation is "Noida, Uttar Pradesh"
+          const parts = savedLocation.split(',');
+          setLocTitle(parts[0].trim()); // Sets "Noida"
+          setLocSubtitle(savedLocation); // Sets full string
+        } else {
+          setLocTitle("Location not set");
+          setLocSubtitle("Tap here to set location");
+        }
+      } catch (error) {
+        console.error("Failed to load location", error);
+        setLocTitle("Unknown");
+        setLocSubtitle("Failed to load location");
+      }
+    };
+
+    fetchLocation();
+  }, []);
 
   return (
     <SafeAreaView style={styles.safeArea}>
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false} bounces={false}>
         {/* Header */}
         <View style={styles.header}>
-          <View style={styles.headerLeft}>
-            <Text style={styles.locationTitle}>NPX Tower ∨</Text>
+          
+          {/* --- Dynamic Location Display --- */}
+          {/* Wrapped in a TouchableOpacity so users can click it to change their location later */}
+          <TouchableOpacity 
+            style={styles.headerLeft} 
+            activeOpacity={0.7}
+            onPress={() => router.push('/location1')}
+          >
+            <Text style={styles.locationTitle}>{locTitle}</Text>
             <Text style={styles.locationSubtitle} numberOfLines={1}>
-              NPX Tower, 102, Noida-Greater Noid...
+              {locSubtitle}
             </Text>
-          </View>
+          </TouchableOpacity>
+
           <View style={styles.headerRight}>
             <TouchableOpacity style={styles.earnButton}
               onPress={() => router.push('/EarnRefer')}
@@ -56,7 +93,6 @@ export default function DashboardScreen() {
               </View>
             </TouchableOpacity>
 
-            {/* Profile Button Connected Here */}
             <TouchableOpacity
               style={styles.profileButton}
               onPress={() => router.push('/profile')}
@@ -72,7 +108,7 @@ export default function DashboardScreen() {
             COMING <Text style={{ color: theme.primary }}>SOON</Text>
           </Text>
           <Text style={styles.heroSubtitle}>
-            We&apos;re currently live in select areas and expanding quickly. Get
+            We're currently live in select areas and expanding quickly. Get
             notified when we are near you!
           </Text>
           <TouchableOpacity style={styles.notifyButton} activeOpacity={0.8}>
@@ -85,7 +121,7 @@ export default function DashboardScreen() {
           <Text style={styles.sectionTitle}>Services we offer</Text>
           <View style={styles.gridContainer}>
             {servicesData.map((item) => (
-              < TouchableOpacity
+              <TouchableOpacity
                 key={item.id}
                 style={styles.serviceCard}
                 activeOpacity={0.7}
@@ -120,7 +156,6 @@ export default function DashboardScreen() {
   );
 }
 
-// ... (Keep your Dashboard styles unchanged, but ensure theme is updated to Light Blue above) ...
 const styles = StyleSheet.create({
   safeArea: { flex: 1, backgroundColor: theme.primary },
   container: { flex: 1, backgroundColor: theme.background },

@@ -7,7 +7,7 @@ import {
   SafeAreaView,
 } from "react-native";
 
-import { theme } from '@/src/theme/colors.ts';
+import { theme } from '@/src/theme/colors';
 
 export default function BookingsScreen() {
   const [activeMainTab, setActiveMainTab] = useState<"upcoming" | "past">(
