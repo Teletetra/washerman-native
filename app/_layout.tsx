@@ -20,6 +20,7 @@ export default function RootLayout() {
         <Stack.Screen name="service/[id]" options={{ headerShown: false }} />
         <Stack.Screen name="profile-update" options={{ headerShown: false }} />
         <Stack.Screen name="address-book" options={{ headerShown: false }} />
+        <Stack.Screen name="EarnRefer" options={{ headerShown: false }} />
         <Stack.Screen name="refer-and-earn" options={{ headerShown: false }} />
         <Stack.Screen name="BookingScreen" options={{ headerShown: false }} />
         <Stack.Screen name="about-us" options={{ headerShown: false }} />

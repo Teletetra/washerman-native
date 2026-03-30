@@ -15,8 +15,7 @@ import {
   View,
 } from 'react-native';
 
-import { theme } from '@/src/theme/colors.ts';
-
+import { theme } from '@/src/theme/colors';
 
 // 🔥 Marquee Row Component for Animated Images
 const MarqueeRow = ({ images, reverse }: { images: any[], reverse?: boolean }) => {
@@ -38,7 +37,6 @@ const MarqueeRow = ({ images, reverse }: { images: any[], reverse?: boolean }) =
       <Animated.View style={[styles.row, { transform: [{ translateX }] }]}>
         {[...images, ...images].map((img, index) => (
           <View key={index} style={styles.imagePlaceholder}>
-            {/* Replace with actual <Image source={img} style={styles.image} /> */}
             <Text style={{ fontSize: 30 }}>✨</Text>
           </View>
         ))}
@@ -73,6 +71,7 @@ export default function LoginScreen() {
       alert('Please enter a valid phone number');
       return;
     }
+    // Simple navigation, no Firebase calls
     router.replace('/location1');
   };
 
@@ -103,7 +102,7 @@ export default function LoginScreen() {
               </Text>
             </View>
 
-            {/* Animated Marquee Images - Hides when keyboard is open to fit screen */}
+            {/* Animated Marquee Images */}
             {!isKeyboardVisible && (
               <View style={styles.marqueeWrapper}>
                 <MarqueeRow images={[1, 2, 3]} />
@@ -175,175 +174,35 @@ export default function LoginScreen() {
 }
 
 const styles = StyleSheet.create({
-  safeArea: {
-    flex: 1,
-    backgroundColor: theme.primary,
-  },
-  container: {
-    flex: 1,
-    backgroundColor: theme.background,
-  },
-  innerContainer: {
-    flex: 1,
-  },
-  headerBackground: {
-    backgroundColor: theme.primary,
-    paddingTop: Platform.OS === 'android' ? 20 : 10,
-    paddingBottom: 30,
-    paddingHorizontal: 20,
-    borderBottomLeftRadius: 40,
-    borderBottomRightRadius: 40,
-    alignItems: 'center',
-  },
-  skipContainer: {
-    width: '100%',
-    alignItems: 'flex-end',
-    marginBottom: 10,
-  },
-  skipButton: {
-    backgroundColor: theme.primaryDark,
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    borderRadius: 20,
-  },
-  skipButtonText: {
-    color: '#FFF',
-    fontSize: 14,
-    fontWeight: '600',
-  },
-  logoText: {
-    color: '#FFF',
-    fontSize: 44,
-    fontWeight: '900',
-    marginBottom: 5,
-    letterSpacing: -1,
-  },
-  subtitleText: {
-    color: '#FFF',
-    fontSize: 20,
-    fontWeight: '700',
-    textAlign: 'center',
-    lineHeight: 28
-  },
-  // Marquee Styles
-  marqueeWrapper: {
-    marginTop: 20,
-    marginBottom: 10,
-  },
-  marqueeContainer: {
-    overflow: 'hidden',
-    marginBottom: 12,
-  },
-  row: {
-    flexDirection: 'row',
-  },
-  imagePlaceholder: {
-    height: 90,
-    width: 90,
-    borderRadius: 16,
-    marginRight: 12,
-    backgroundColor: '#F0F8FF',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  // Form Styles
-  formContainer: {
-    flex: 1,
-    paddingHorizontal: 24,
-    paddingTop: 15,
-    paddingBottom: Platform.OS === 'ios' ? 10 : 20,
-    justifyContent: 'space-between', // Forces terms to the bottom, inputs to the top
-  },
-  formTitle: {
-    fontSize: 24,
-    fontWeight: '800',
-    color: theme.textDark,
-    textAlign: 'center',
-    marginBottom: 20
-  },
-  inputContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderWidth: 1.5,
-    borderColor: theme.border,
-    borderRadius: 12,
-    paddingHorizontal: 16,
-    height: 56,
-    marginBottom: 16,
-    backgroundColor: '#FFF',
-  },
-  inputFocused: {
-    borderColor: theme.primary,
-  },
-  countryCode: {
-    fontSize: 16,
-    fontWeight: '700',
-    color: theme.textDark,
-    marginRight: 12,
-    borderRightWidth: 1.5,
-    borderRightColor: theme.border,
-    paddingRight: 12
-  },
-  input: {
-    flex: 1,
-    fontSize: 16,
-    color: theme.textDark,
-    fontWeight: '600',
-    height: '100%',
-  },
-  continueButton: {
-    height: 56,
-    borderRadius: 12,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 5,
-  },
+  safeArea: { flex: 1, backgroundColor: theme.primary },
+  container: { flex: 1, backgroundColor: theme.background },
+  innerContainer: { flex: 1 },
+  headerBackground: { backgroundColor: theme.primary, paddingTop: Platform.OS === 'android' ? 20 : 10, paddingBottom: 30, paddingHorizontal: 20, borderBottomLeftRadius: 40, borderBottomRightRadius: 40, alignItems: 'center' },
+  skipContainer: { width: '100%', alignItems: 'flex-end', marginBottom: 10 },
+  skipButton: { backgroundColor: theme.primaryDark, paddingHorizontal: 16, paddingVertical: 8, borderRadius: 20 },
+  skipButtonText: { color: '#FFF', fontSize: 14, fontWeight: '600' },
+  logoText: { color: '#FFF', fontSize: 44, fontWeight: '900', marginBottom: 5, letterSpacing: -1 },
+  subtitleText: { color: '#FFF', fontSize: 20, fontWeight: '700', textAlign: 'center', lineHeight: 28 },
+  marqueeWrapper: { marginTop: 20, marginBottom: 10 },
+  marqueeContainer: { overflow: 'hidden', marginBottom: 12 },
+  row: { flexDirection: 'row' },
+  imagePlaceholder: { height: 90, width: 90, borderRadius: 16, marginRight: 12, backgroundColor: '#F0F8FF', justifyContent: 'center', alignItems: 'center' },
+  formContainer: { flex: 1, paddingHorizontal: 24, paddingTop: 15, paddingBottom: Platform.OS === 'ios' ? 10 : 20, justifyContent: 'space-between' },
+  formTitle: { fontSize: 24, fontWeight: '800', color: theme.textDark, textAlign: 'center', marginBottom: 20 },
+  inputContainer: { flexDirection: 'row', alignItems: 'center', borderWidth: 1.5, borderColor: theme.border, borderRadius: 12, paddingHorizontal: 16, height: 56, marginBottom: 16, backgroundColor: '#FFF' },
+  inputFocused: { borderColor: theme.primary },
+  countryCode: { fontSize: 16, fontWeight: '700', color: theme.textDark, marginRight: 12, borderRightWidth: 1.5, borderRightColor: theme.border, paddingRight: 12 },
+  input: { flex: 1, fontSize: 16, color: theme.textDark, fontWeight: '600', height: '100%' },
+  continueButton: { height: 56, borderRadius: 12, justifyContent: 'center', alignItems: 'center', marginTop: 5 },
   buttonActive: { backgroundColor: theme.primary },
   buttonInactive: { backgroundColor: theme.disabledBtn },
   continueButtonText: { fontSize: 18, fontWeight: '700', color: '#FFFFFF' },
-  // Checkbox Styles
-  checkboxContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 20,
-  },
-  checkbox: {
-    width: 20,
-    height: 20,
-    borderRadius: 6,
-    borderWidth: 1.5,
-    borderColor: theme.primary,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginRight: 10,
-  },
-  checkboxActive: {
-    backgroundColor: theme.primary,
-  },
-  checkmark: {
-    color: '#fff',
-    fontSize: 14,
-    fontWeight: 'bold',
-  },
-  checkboxLabel: {
-    fontSize: 15,
-    color: theme.textDark,
-    fontWeight: '500',
-  },
-  // Footer Terms
-  footer: {
-    alignItems: 'center',
-    paddingBottom: 10,
-  },
-  termsText: {
-    fontSize: 12,
-    textAlign: 'center',
-    color: theme.textMuted,
-    lineHeight: 18,
-  },
-  termsLink: {
-    fontWeight: '600',
-    textDecorationLine: 'underline',
-  },
+  checkboxContainer: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginTop: 20 },
+  checkbox: { width: 20, height: 20, borderRadius: 6, borderWidth: 1.5, borderColor: theme.primary, justifyContent: 'center', alignItems: 'center', marginRight: 10 },
+  checkboxActive: { backgroundColor: theme.primary },
+  checkmark: { color: '#fff', fontSize: 14, fontWeight: 'bold' },
+  checkboxLabel: { fontSize: 15, color: theme.textDark, fontWeight: '500' },
+  footer: { alignItems: 'center', paddingBottom: 10 },
+  termsText: { fontSize: 12, textAlign: 'center', color: theme.textMuted, lineHeight: 18 },
+  termsLink: { fontWeight: '600', textDecorationLine: 'underline' },
 });
