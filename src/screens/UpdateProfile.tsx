@@ -12,7 +12,7 @@ import {
   View,
 } from "react-native";
 
-import { theme } from '@/src/theme/colors.ts'
+import { theme } from '@/src/theme/colors'
 import Header from "../components/Header";
 import InputField from "../components/InputField";
 import Button from "../components/Button";
