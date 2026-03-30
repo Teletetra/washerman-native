@@ -31,7 +31,6 @@ export default function ProfileScreen() {
   return (
     <SafeAreaView style={styles.safeArea}>
       <ScrollView style={styles.container} bounces={false}>
-        {/* Top Header Section */}
         <View style={styles.header}>
           <View style={styles.headerNav}>
             <TouchableOpacity
@@ -52,15 +51,13 @@ export default function ProfileScreen() {
               <Text style={styles.userPhone}>+91 8279791418</Text>
               <TouchableOpacity
                 style={styles.editButton}
-                onPress={() => router.push("/UpdateProfile")} // <-- Connects to Update Profile
+                onPress={() => router.push("/updateProfile")} // <-- Connects to Update Profile
               >
                 <Text style={styles.editText}>Edit profile ›</Text>
               </TouchableOpacity>
             </View>
           </View>
         </View>
-
-        {/* Menu Items Section */}
         <View style={styles.menuContainer}>
           <View style={styles.menuCard}>
             {menuItems.map((item, index) => (

@@ -17,7 +17,6 @@ import Header from "../components/Header";
 import InputField from "../components/InputField";
 import Button from "../components/Button";
 
-// Custom Input to perfectly mimic the image's "label cut into border" design
 const FloatingLabelInput = ({ label, value, onChangeText, ...props }: any) => {
   return (
     <View style={styles.inputWrapper}>
@@ -53,29 +52,22 @@ export default function UpdateProfile() {
           contentContainerStyle={styles.scrollContent}
           bounces={false}
         >
-          {/* Avatar Section */}
           <View style={styles.avatarSection}>
             <View style={styles.avatarContainer}>
-              {/* Giant icon mimicking the placeholder */}
               <Text style={styles.avatarGiantIcon}>👤</Text>
-
-              {/* Edit Pencil Badge */}
               <TouchableOpacity style={styles.editBadge} activeOpacity={0.8}>
                 <Text style={styles.editPencil}>✏️</Text>
               </TouchableOpacity>
             </View>
           </View>
-
-          {/* Form Section */}
           <View style={styles.formSection}>
-            {/* REUSABLE INPUTS */}
+
             <InputField label="First Name" value={firstName} onChangeText={setFirstName} />
             <InputField label="Last Name" value="User" />
             <InputField label="Mobile" value="8279791418" keyboardType="phone-pad" />
           </View>
         </ScrollView>
 
-        {/* Bottom Button Fixed */}
         <View style={styles.bottomArea}>
           <Button title="Update profile" onPress={() => router.back()} />
         </View>
